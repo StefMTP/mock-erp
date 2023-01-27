@@ -5,8 +5,8 @@
  * file.
  */
 
-import Env from '@ioc:Adonis/Core/Env'
-import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
+import Env from "@ioc:Adonis/Core/Env";
+import { DatabaseConfig } from "@ioc:Adonis/Lucid/Database";
 
 const databaseConfig: DatabaseConfig = {
   /*
@@ -19,7 +19,7 @@ const databaseConfig: DatabaseConfig = {
   | file.
   |
   */
-  connection: Env.get('DB_CONNECTION'),
+  connection: Env.get("DB_CONNECTION"),
 
   connections: {
     /*
@@ -34,21 +34,24 @@ const databaseConfig: DatabaseConfig = {
     |
     */
     pg: {
-      client: 'pg',
+      client: "pg",
       connection: {
-        host: Env.get('PGHOST'),
-        port: Env.get('PGPORT'),
-        user: Env.get('PGUSER'),
-        password: Env.get('PGPASSWORD', ''),
-        database: Env.get('PGDATABASE'),
+        host: Env.get("PGHOST"),
+        port: Env.get("PGPORT"),
+        user: Env.get("PGUSER"),
+        password: Env.get("PGPASSWORD", ""),
+        database: Env.get("PGDATABASE"),
       },
       migrations: {
         naturalSort: true,
+      },
+      seeders: {
+        paths: ["./database/seeders/MainSeeder"],
       },
       healthCheck: true,
       debug: false,
     },
   },
-}
+};
 
-export default databaseConfig
+export default databaseConfig;
