@@ -18,25 +18,24 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
-import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
-import Env from '@ioc:Adonis/Core/Env'
+import Route from "@ioc:Adonis/Core/Route";
+import HealthCheck from "@ioc:Adonis/Core/HealthCheck";
+import Env from "@ioc:Adonis/Core/Env";
 
-Route.get('/', () => {
-  return { hello: 'world' }
-})
+Route.get("/", () => {
+  return { hello: "world" };
+});
+if (Env.get("IPX_ENABLED")) Route.get("/image/*", "ImagesController.index");
 
 Route.group(() => {
-  Route.post('/register', 'AuthController.register')
-  Route.post('/login', 'AuthController.login')
-  Route.get('/logout', 'AuthController.logout')
-  Route.get('/', 'AuthController.index')
-}).prefix('/auth')
+  Route.resource("materials", "MaterialsController").apiOnly();
+  Route.resource("availabilities", "AvailabilitiesController").apiOnly();
+}).middleware("auth");
 
-Route.get('health', async ({ response }) => {
-  const report = await HealthCheck.getReport()
+Route.post("api/login", "AuthController.generate");
 
-  return report.healthy ? response.ok(report) : response.badRequest(report)
-})
+Route.get("health", async ({ response }) => {
+  const report = await HealthCheck.getReport();
 
-if (Env.get('IPX_ENABLED')) Route.get('/image/*', 'ImagesController.index')
+  return report.healthy ? response.ok(report) : response.badRequest(report);
+});
