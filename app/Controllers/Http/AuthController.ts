@@ -8,7 +8,7 @@ export default class AuthController {
         .use("api")
         .attempt(username, password, { expiresIn: "7 days" });
       return token;
-    } catch {
+    } catch (err) {
       return response.abort("provided arguments were not formatted correctly");
     }
   }
