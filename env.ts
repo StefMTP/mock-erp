@@ -12,21 +12,25 @@
 |
 */
 
-import Env from '@ioc:Adonis/Core/Env'
+import Env from "@ioc:Adonis/Core/Env";
 
 export default Env.rules({
-  HOST: Env.schema.string({ format: 'host' }),
+  HOST: Env.schema.string({ format: "host" }),
   PORT: Env.schema.number(),
   APP_KEY: Env.schema.string(),
   APP_NAME: Env.schema.string(),
-  DRIVE_DISK: Env.schema.enum(['local'] as const),
-  NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
+  DRIVE_DISK: Env.schema.enum(["local"] as const),
+  NODE_ENV: Env.schema.enum(["development", "production", "test"] as const),
   SESSION_DRIVER: Env.schema.string(),
-  PGHOST: Env.schema.string({ format: 'host' }),
+  PGHOST: Env.schema.string({ format: "host" }),
   PGPORT: Env.schema.number(),
   PGUSER: Env.schema.string(),
   PGPASSWORD: Env.schema.string.optional(),
   PGDATABASE: Env.schema.string(),
+  REDIS_CONNECTION: Env.schema.enum(["railway"] as const),
+  REDIS_HOST: Env.schema.string({ format: "host" }),
+  REDIS_PORT: Env.schema.number(),
+  REDIS_PASSWORD: Env.schema.string.optional(),
   IPX_ENABLED: Env.schema.boolean(),
   IPX_DOMAINS: Env.schema.string.optional(),
-})
+});
