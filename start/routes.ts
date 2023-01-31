@@ -30,6 +30,7 @@ if (Env.get("IPX_ENABLED")) Route.get("/image/*", "ImagesController.index");
 Route.group(() => {
   Route.resource("materials", "MaterialsController").apiOnly();
   Route.resource("availabilities", "AvailabilitiesController").apiOnly();
+  Route.post("orders", "OrdersController.create");
 }).middleware("auth");
 
 Route.post("api/login", "AuthController.generate");

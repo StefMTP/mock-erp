@@ -4,7 +4,7 @@ import AvailabilityService from "App/Services/AvailabilityService";
 export default class AvailabilitiesController {
   public async index({ response }: HttpContextContract) {
     const availabilityService = new AvailabilityService();
-    const availabilities = await availabilityService.getAvailabilities();
+    const availabilities = await availabilityService.getAllAvailabilities();
     return response.status(200).json({ availabilities });
   }
 }
