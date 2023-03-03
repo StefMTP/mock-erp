@@ -34,7 +34,7 @@
     "@adonisjs/repl": "^3.1.11",
     "@adonisjs/session": "^6.4.0",
     "@adonisjs/shield": "^7.1.0",
-    "chance": "^1.1.9",
+    "chance": "^1.1.11",
     "ipx": "^0.9.11",
     "luxon": "^3.2.1",
     "pg": "^8.8.0",
