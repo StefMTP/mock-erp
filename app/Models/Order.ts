@@ -9,6 +9,7 @@ import {
 } from "@ioc:Adonis/Lucid/Orm";
 import Material from "./Material";
 import Customer from "./Customer";
+import { OrderStatus } from "App/Types";
 
 export default class Order extends BaseModel {
   @column({ isPrimary: true })
@@ -18,7 +19,13 @@ export default class Order extends BaseModel {
   public customerId: number;
 
   @column()
+  public shopifyOrderId: number;
+
+  @column()
   public totalPrice: number;
+
+  @column()
+  public status: OrderStatus;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

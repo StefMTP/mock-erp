@@ -1,15 +1,16 @@
 import Customer from "App/Models/Customer";
-import AvailabilityService from "./AvailabilityService";
+import { Order } from "App/Types";
+import AvailabilitiesService from "./AvailabilitiesService";
 
 export default class OrdersService {
-  public async createOrder(data) {
+  public async createOrder(data: Order) {
     const processedLineItems = data.line_items.map((line_item) => ({
       sku: line_item.sku,
       quantity: line_item.quantity,
     }));
     const address = data.shipping_address || data.billing_address;
-    const availabilityService = new AvailabilityService();
-    const materials = await availabilityService.getAvailabilities(
+    const availabilitiesService = new AvailabilitiesService();
+    const materials = await availabilitiesService.getAvailabilities(
       processedLineItems.map((item) => item.sku)
     );
     // If the order has no SKUs related to the ERP, do nothing!
@@ -50,17 +51,19 @@ export default class OrdersService {
               : max,
           material.locations[0]
         );
-        await location.related("materials").sync(
-          {
-            [material.id]: {
-              quantity:
-                location.$extras.pivot_quantity -
-                processedLineItems.find((item) => item.sku == material.code)
-                  ?.quantity,
-            },
-          },
-          false
+        const item = processedLineItems.find(
+          (item) => item.sku == material.code
         );
+        if (item) {
+          await location.related("materials").sync(
+            {
+              [material.id]: {
+                quantity: location.$extras.pivot_quantity - item.quantity,
+              },
+            },
+            false
+          );
+        }
       }
       return { customer, order };
     }
